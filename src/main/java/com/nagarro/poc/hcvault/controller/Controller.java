@@ -1,16 +1,21 @@
 package com.nagarro.poc.hcvault.controller;
 
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class Controller {
-    @Value("${db.user}")
-    private String dbuser;
+    @Autowired
+    Environment environment;
+
+    private String dbUser;
+
     @GetMapping(path = "/userinfo")
     public String getUserFromHCVault() {
-        System.out.println(dbuser);
-        return dbuser;
+        dbUser = environment.getProperty("db.user");
+        System.out.println(dbUser);
+        return dbUser;
     }
 }
